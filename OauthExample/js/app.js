@@ -1,7 +1,7 @@
 'use strict'
 
 import React, { Component } from 'react';
-var LoginScreen = require('./auth/LoginScreen.js');
+var LoginScreen = require('./auth/LoginScreen');
 
 class DiscogsApp extends Component {
 

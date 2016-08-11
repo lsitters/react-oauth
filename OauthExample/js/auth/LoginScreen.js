@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableHighlight, Linking, AsyncStorage, Image, Animated } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 
-var config = require('./loginConfig.js');
+var config = require('./loginConfig');
 var qs = require('qs');
 
 class LoginScreen extends Component {

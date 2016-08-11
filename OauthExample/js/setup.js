@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 var { Provider } = require('react-redux');
-var DiscogsApp = require('./app.js');
+var DiscogsApp = require('./app');
 
 function setup(): ReactClass<{}> {
 
