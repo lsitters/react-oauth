@@ -24,8 +24,6 @@ class LoginScreen extends Component {
 
     render() {
         return (
-            //<LoginScreen />
-
             <View style={styles.container}>
                 <Image source={require('../../img/discogs-white.png')} style={styles.loginLogo}/>
                 <TouchableHighlight onPress={this._handleLogin.bind(this)}>
@@ -42,19 +40,17 @@ class LoginScreen extends Component {
 
 // Discogs
 function requestAuthToken(callback) {
-
-        var timeStamp = Date.now();
-
-        var reqTokenUrl = [
-            config.DISCOGS_CONFIG.Request_Token_URL,
-            '?oauth_consumer_key=' + config.DISCOGS_CONFIG.Consumer_Key,
-            '&oauth_version=1.0',
-            '&oauth_nonce=' + timeStamp,
-            '&oauth_signature=' + config.DISCOGS_CONFIG.Consumer_Secret,
-            '&oauth_signature_method=PLAINTEXT',
-            '&oauth_timestamp=' + timeStamp,
-            '&oauth_callback=oauth2example://'
-        ].join('');
+        var timeStamp = Date.now(),
+            reqTokenUrl = [
+                config.DISCOGS_CONFIG.Request_Token_URL,
+                '?oauth_consumer_key=' + config.DISCOGS_CONFIG.Consumer_Key,
+                '&oauth_version=1.0',
+                '&oauth_nonce=' + timeStamp,
+                '&oauth_signature=' + config.DISCOGS_CONFIG.Consumer_Secret,
+                '&oauth_signature_method=PLAINTEXT',
+                '&oauth_timestamp=' + timeStamp,
+                '&oauth_callback=oauth2example://'
+            ].join('');
 
         fetch(reqTokenUrl, {
             method: 'GET',
@@ -65,8 +61,7 @@ function requestAuthToken(callback) {
             }
         })
         .then((json) => {
-            let oauth_token = json._bodyText;
-            discogsOAuth(oauth_token, callback);
+            discogsOAuth(json._bodyText, callback);
         })
         .catch((error) => {
             console.error(error);
@@ -74,32 +69,30 @@ function requestAuthToken(callback) {
     }
 
 function discogsOAuth (oauth_token, callback) {
-
         Linking.addEventListener('url', handleUrl);
         Linking.openURL(['https://discogs.com/oauth/authorize?', oauth_token].join(''));
 
         function handleUrl (event) {
-          var [begin, end] = event.url.match(/\?(.*)/);
-          var query = qs.parse(end);
+            var [begin, end] = event.url.match(/\?(.*)/),
+                query = qs.parse(end);
 
-          callback(null, query.oauth_token);
-          Linking.removeEventListener('url', handleUrl)
+                callback(null, query.oauth_token);
+                Linking.removeEventListener('url', handleUrl)
         }
-
     }
 
 // Styles
 const styles = StyleSheet.create({
-      container: {
+    container: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#333',
-      },
-      loginLogo: {
+        backgroundColor: '#333'
+    },
+    loginLogo: {
         marginBottom: 25
-      },
-      button: {
+    },
+    button: {
         fontSize: 16,
         textAlign: 'center',
         padding: 10,
@@ -107,12 +100,12 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         color: '#fff',
         borderRadius: 3
-      },
-      instructions: {
+    },
+    instructions: {
         textAlign: 'center',
         color: '#333333',
-        marginBottom: 5,
-      },
-    });
+        marginBottom: 5
+    }
+});
 
 module.exports = LoginScreen;
